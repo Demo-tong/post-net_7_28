@@ -9,8 +9,9 @@ describe("transferToBarcode", function () {
   it("postCode transformer to barcode", function () {
     let input = "12345-1234";
     let expected = "|:::||::|:|::||::|::|:|:|::::||::|:|::||::|::|:|:|:|";
+    let check = 5;
 
-    expect(theCall.transferToBarcode(input)).toEqual(expected);
+    expect(theCall.transferToBarcode(input)).toEqual(expected + '\ncd is ' + check);
   });
 
   it("check the number format_length", function () {

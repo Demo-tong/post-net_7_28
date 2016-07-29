@@ -15,8 +15,9 @@ function transferToBarcode(postCodeString) {
   let allZipCodes = loadPostCodes();
   let formatedNumbers = getFormatNumbers(postCodeString);
   let checkDigit = getCheckDigit(formatedNumbers);
-
-  return generateBarcode(allZipCodes, checkDigit, formatedNumbers);
+  let formatedBarcode = generateBarcode(allZipCodes, checkDigit, formatedNumbers);
+  
+  return formatedBarcode + '\ncd is ' + checkDigit;
 }
 
 function isFormatString(postCodeString) {
