@@ -12,6 +12,20 @@ describe("transferToBarcode", function () {
 
     expect(theCall.transferToBarcode(input)).toEqual(expected);
   });
+
+  it("check the number format_length", function () {
+    let input = "1234";
+    let expected = "the letter or the length of number is illegal(the length should be 5/9/10 contain'-')";
+
+    expect(theCall.transferToBarcode(input)).toBe(expected);
+  });
+
+  it("check the number format_letter", function () {
+    let input = "1234a1234";
+    let expected = "the letter or the length of number is illegal(the length should be 5/9/10 contain'-')";
+
+    expect(theCall.transferToBarcode(input)).toBe(expected);
+  });
 });
 
 describe("isFormatString", function () {
@@ -24,14 +38,14 @@ describe("isFormatString", function () {
 
   it("check the number format_length", function () {
     let input = "1234";
-    let expected = "error length(the length should be 5/9/10)";
+    let expected = "the letter or the length of number is illegal(the length should be 5/9/10 contain'-')";
 
     expect(theCall.isFormatString(input)).toBe(expected);
   });
 
   it("check the number format_letter", function () {
     let input = "1234a1234";
-    let expected = "error letter";
+    let expected = "the letter or the length of number is illegal(the length should be 5/9/10 contain'-')";
 
     expect(theCall.isFormatString(input)).toBe(expected);
   });

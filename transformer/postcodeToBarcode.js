@@ -1,18 +1,15 @@
-/**
- * Created by tong on 16-7-28.
- */
 'use strict';
 
+//postcode to barcode
 function loadPostCodes() {
   return ["||:::", ":::||", "::|:|", "::||:", ":|::|", ":|:|:", ":||::",
     "|:::|", "|::|:", "|:|::"];
 }
 
-//postcode to barcode
 function transferToBarcode(postCodeString) {
   let checkResult = isFormatString(postCodeString);
-  if (!checkResult) {
-    return false;
+  if (checkResult !== true) {
+    return checkResult;
   }
 
   let allZipCodes = loadPostCodes();
@@ -22,53 +19,11 @@ function transferToBarcode(postCodeString) {
   return generateBarcode(allZipCodes, checkDigit, formatedNumbers);
 }
 
-
 function isFormatString(postCodeString) {
-  let result = [];
-
-  let temp = postCodeString.replace('-', '');
-  temp = temp.split('');
-
-  if (temp.length === 5 || temp.length === 9) {
-    temp.forEach(function (item) {
-      result.push(parseInt(item));
-    });
-    for (let item of result) {
-      if (!(item >= 0 && item <= 9)) {
-        return "error letter";
-      }
-    }
-    return true;
-  }
-  return "error length(the length should be 5/9/10)";
-}
-
-
-function isFormatString2(postCodeString) {
-  let result = checkLength(postCodeString);
-  if (result === true) {
-    return checkOtherLetter(postCodeString);
-
-    //  return result;
-  }
-  return result;
-//  return checkOtherLetter(postCodeString);
-}
-
-function checkLength(postCodeString) {
   let result = /^\d{5}$|^\d{9}$|^\d{5}-\d{4}$/.test(postCodeString);
   if (!result) {
-    result = "the length of number is illegal(the length should be 5/9/10)";
+    result = "the letter or the length of number is illegal(the length should be 5/9/10 contain'-')";
   }
-  return result;
-}
-
-function checkOtherLetter(postCodeString) {
-  let result = /^[\d-]+$/.test(postCodeString);
-  if (!result) {
-    result = "the input contains other letter";
-  }
-
   return result;
 }
 
@@ -85,8 +40,7 @@ function getCheckDigit(formatedNumbers) {
           .reduce(function (fir, sec) {
             return fir + sec;
           });
-  let cd = 10 - total % 10;
-  return cd;
+  return (10 - total % 10);
 }
 
 function generateBarcode(allZipCodes, checkDigit, formatedNumbers) {

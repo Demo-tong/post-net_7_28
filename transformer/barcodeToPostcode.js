@@ -10,13 +10,15 @@ function transferToPostCode(barcodeString) {
   let legalResult = isLegalBarcode(barcodeString);
 
   if (!legalResult) {
-    return false;
+    return "error input(only '|'':'' 'can be accepted and ' 'is must)";
   }
   let allZipCodes = loadPostCodes();
   let postCodes = getPostNumber(allZipCodes, barcodeString);
-  if (isLegalCheckDigit(postCodes)) {
-    return formatPostCode(postCodes);
+
+  if (!isLegalCheckDigit(postCodes)) {
+    return "it has uncorrect checkdigit";
   }
+  return formatPostCode(postCodes);
 }
 
 function isLegalBarcode(barcodeString) {
@@ -27,14 +29,12 @@ function getPostNumber(allZipCodes, barcodeString) {
   let postNumber = [];
   let temp = barcodeString.split(" ").slice(1, -1);
 
-  temp.forEach(function (item) {
+  return temp.map(function (item) {
     let pos = allZipCodes.indexOf(item);
     if (pos) {
-      postNumber.push(pos);
+      return pos;
     }
   });
-
-  return postNumber;
 }
 
 function isLegalCheckDigit(postCodes) {

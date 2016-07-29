@@ -13,6 +13,20 @@ describe("transferToPostCode", function () {
 
     expect(theCall.transferToPostCode(input)).toEqual(expected);
   });
+
+  it("barcode transfer to postcode", function () {
+    let input = "| :::|| ::|:| ::||: :|::| :|:|: :::|| ::|:| ::||: :|::| :*|:: |";
+    let expected = "error input(only '|'':'' 'can be accepted and ' 'is must)";
+
+    expect(theCall.transferToPostCode(input)).toEqual(expected);
+  });
+
+  it("barcode transfer to postcode", function () {
+    let input = "| :::|| ::|:| ::||: :|::| :|:|: :::|| ::|:| ::||: :|::| :||:: |";
+    let expected = "it has uncorrect checkdigit";
+
+    expect(theCall.transferToPostCode(input)).toEqual(expected);
+  });
 });
 
 describe("isLegalBarcode", function () {
